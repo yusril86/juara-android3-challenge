@@ -1,8 +1,8 @@
 package com.yusril.trawlbenstest.adapter
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.appcompat.view.menu.MenuView
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -10,9 +10,11 @@ import com.bumptech.glide.Glide
 import com.yusril.trawlbenstest.R
 import com.yusril.trawlbenstest.data.model.Pokemon
 import com.yusril.trawlbenstest.databinding.ItemListPokemonBinding
+import com.yusril.trawlbenstest.ui.detail.DetailPokemonActivity
+import com.yusril.trawlbenstest.utils.Constant.uriImagePokemon
 
 class PokemonAdapter : PagingDataAdapter<Pokemon, PokemonAdapter.ItemView>(DIFF_CALLBACK) {
-    private val uriImagePokemon: String = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon"
+
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemView {
@@ -37,6 +39,13 @@ class PokemonAdapter : PagingDataAdapter<Pokemon, PokemonAdapter.ItemView>(DIFF_
                     .centerCrop()
                     .placeholder(R.drawable.ic_launcher_background)
                     .into(binding.ivFoto)
+                itemView.setOnClickListener {
+                    val intent = Intent(itemView.context, DetailPokemonActivity::class.java)
+                    intent.putExtra("NUMBER_POKEMON",data.number)
+                    intent.putExtra("IMAGE_POKEMON","${uriImagePokemon}/${data.number}.png")
+                    itemView.context.startActivity(intent)
+
+                }
             }
     }
 

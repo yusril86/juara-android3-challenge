@@ -16,7 +16,7 @@
         android:theme="@style/Theme.TrawlbensTest"
         tools:targetApi="31">
         <activity
-            android:name=".DetailPokemonActivity"
+            android:name=".ui.detail.DetailPokemonActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

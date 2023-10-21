@@ -1,9 +1,179 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.DetailPokemonActivity">
+    tools:context=".ui.detail.DetailPokemonActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <include
+            android:id="@+id/toolbarDetail"
+            layout="@layout/layout_toolbar_detail"
+            />
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_imagePokemonDetail"
+            android:layout_width="80dp"
+            android:layout_height="100dp"
+            app:layout_constraintTop_toBottomOf="@id/toolbarDetail"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:src="@tools:sample/avatars"
+            android:layout_marginTop="8dp"
+            />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/iv_imagePokemonDetail"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            app:cardCornerRadius="8dp"
+            android:elevation="3dp"
+            android:layout_marginTop="8dp"
+
+            >
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_InformasiUmum"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Informasi Umum"
+                    android:textSize="14sp"
+                    android:textColor="@color/red"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_detailHeaderNomor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/tv_InformasiUmum"
+                    app:layout_constraintStart_toStartOf="@id/tv_InformasiUmum"
+                    android:text="Nomor"
+                    android:textSize="14sp"
+                    android:layout_marginTop="8dp"
+                    />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_detailNomor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/tv_detailHeaderNomor"
+                    app:layout_constraintStart_toStartOf="@id/tv_InformasiUmum"
+                    android:text="#002"
+                    android:textSize="14sp"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="8dp"
+                    />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_detailHeaderNama"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/tv_detailNomor"
+                    app:layout_constraintStart_toStartOf="@id/tv_InformasiUmum"
+                    android:text="Nama"
+                    android:textSize="14sp"
+                    android:layout_marginTop="8dp"
+                    />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_detailNama"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/tv_detailHeaderNama"
+                    app:layout_constraintStart_toStartOf="@id/tv_InformasiUmum"
+                    android:text="Pikac"
+                    android:textSize="14sp"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="8dp"
+                    />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_detailHeaderType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/tv_detailNama"
+                    app:layout_constraintStart_toStartOf="@id/tv_InformasiUmum"
+                    android:text="Types"
+                    android:textSize="14sp"
+                    android:layout_marginTop="8dp"
+                    />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_typePokemonDetail"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/tv_detailHeaderType"
+                    app:spanCount="2"
+                    tools:itemCount="2"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_detailHeaderHeight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/rv_typePokemonDetail"
+                    app:layout_constraintStart_toStartOf="@id/tv_InformasiUmum"
+                    android:text="Height"
+                    android:textSize="14sp"
+                    android:layout_marginTop="8dp"
+                    />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_detailHeight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/tv_detailHeaderHeight"
+                    app:layout_constraintStart_toStartOf="@id/tv_InformasiUmum"
+                    android:text="0"
+                    android:textSize="14sp"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="8dp"
+                    />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_detailHeaderWeight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/tv_detailHeight"
+                    app:layout_constraintStart_toStartOf="@id/tv_InformasiUmum"
+                    android:text="Weight :"
+                    android:textSize="14sp"
+                    android:layout_marginTop="8dp"
+                    />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_detailWeight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/tv_detailHeaderWeight"
+                    app:layout_constraintStart_toStartOf="@id/tv_InformasiUmum"
+                    android:text="0"
+                    android:textSize="14sp"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="8dp"
+                    />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

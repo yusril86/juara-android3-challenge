@@ -16,6 +16,6 @@ interface ApiService {
 
     @GET("pokemon/{pokemonNumber}")
     suspend fun getPokemonDetail(
-        @Path("pokemonNumber") pokemonNo: Int,
+        @Path("pokemonNumber") pokemonNumber: Int,
     ): PokemonDetail
 }

@@ -14,8 +14,8 @@ class HomeViewModel @Inject constructor(
     private val pokemonRepository: PokemonRepository
 ) : ViewModel() {
 
-    suspend fun getPokemon() : Flow<PagingData<Pokemon>> =
-        pokemonRepository.getPokemonList(limit = 10, offset = null).cachedIn(viewModelScope)
+   /* suspend fun getPokemon() : Flow<PagingData<Pokemon>> =
+        pokemonRepository.getPokemonList(limit = 10, offset = null).cachedIn(viewModelScope)*/
 
     val surahFetchData: LiveData<PagingData<Pokemon>> = liveData {
 
