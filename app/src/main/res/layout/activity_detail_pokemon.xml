@@ -6,6 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".ui.detail.DetailPokemonActivity">
 
+
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -13,6 +15,20 @@
             android:id="@+id/toolbarDetail"
             layout="@layout/layout_toolbar_detail"
             />
+        <ProgressBar
+            android:id="@+id/pbPokemonDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:indeterminate="true"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            style="@style/Widget.AppCompat.ProgressBar"
+            android:visibility="gone"
+            />
+
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iv_imagePokemonDetail"
             android:layout_width="80dp"
@@ -115,8 +131,7 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_typePokemonDetail"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/tv_detailHeaderType"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:layout_constraintTop_toBottomOf="@id/tv_detailHeaderType"

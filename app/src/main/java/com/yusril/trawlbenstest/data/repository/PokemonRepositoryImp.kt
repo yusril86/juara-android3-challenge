@@ -8,7 +8,9 @@ import com.yusril.trawlbenstest.data.model.Pokemon
 import com.yusril.trawlbenstest.data.model.PokemonDetail
 import com.yusril.trawlbenstest.data.paging.PagingDataSource
 import com.yusril.trawlbenstest.data.paging.PokemonRemoteMediator
+import com.yusril.trawlbenstest.utils.Resource
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -29,7 +31,14 @@ class PokemonRepositoryImp @Inject constructor(
         pagingSourceFactory = { localDataSource.getPokemonDataLocal()}
     ).flow.map { it.map { item -> item.toPokemon() } }
 
-    override suspend fun getPokemonDetail(pokemonNumber: Int): PokemonDetail {
-        return remoteDataSource.getDetailRemotePokemon(pokemonNumber)
+    override suspend fun getPokemonDetail(pokemonNumber: Int): Flow<Resource<PokemonDetail>> = flow{
+        emit(Resource.Loading())
+        try {
+            emit(Resource.Success(remoteDataSource.getDetailRemotePokemon(pokemonNumber)))
+        }catch (exception:Exception){
+            emit(Resource.Error(exception.toString()))
+        }
     }
+
+
 }
