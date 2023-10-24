@@ -9,8 +9,8 @@ import kotlinx.coroutines.flow.Flow
 interface PokemonRepository {
 
     suspend fun getPokemonList(
-        limit: Int,
-        offset: Int?
+        offset: Int?,
+        limit: Int
     ): Flow<PagingData<Pokemon>>
 
     suspend fun getPokemonDetail(pokemonNumber: Int):Flow<Resource<PokemonDetail>>

@@ -4,6 +4,7 @@ import androidx.paging.*
 import com.yusril.pokemon.data.datasource.LocalDataSource
 import com.yusril.pokemon.data.datasource.RemoteDataSource
 import com.yusril.pokemon.data.mapper.toPokemon
+import com.yusril.pokemon.data.model.Pokemon
 import com.yusril.pokemon.data.model.PokemonDetail
 import com.yusril.pokemon.data.paging.PokemonRemoteMediator
 import com.yusril.pokemon.utils.Resource
@@ -21,7 +22,7 @@ class PokemonRepositoryImp @Inject constructor(
 
 
     @OptIn(ExperimentalPagingApi::class)
-    override suspend fun getPokemonList( limit: Int, offset: Int?) = Pager(
+    override suspend fun getPokemonList(offset: Int?, limit: Int): Flow<PagingData<Pokemon>> = Pager(
         config = PagingConfig(
             pageSize = 5
         ),
