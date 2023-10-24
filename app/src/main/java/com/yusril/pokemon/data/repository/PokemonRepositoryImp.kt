@@ -24,7 +24,7 @@ class PokemonRepositoryImp @Inject constructor(
     @OptIn(ExperimentalPagingApi::class)
     override suspend fun getPokemonList(offset: Int?, limit: Int): Flow<PagingData<Pokemon>> = Pager(
         config = PagingConfig(
-            pageSize = 5
+            pageSize = limit
         ),
         remoteMediator = PokemonRemoteMediator(localDataSource,remoteDataSource),
         pagingSourceFactory = { localDataSource.getPokemonDataLocal()}

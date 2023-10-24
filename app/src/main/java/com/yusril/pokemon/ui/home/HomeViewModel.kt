@@ -19,6 +19,6 @@ class HomeViewModel @Inject constructor(
     val surahFetchData: LiveData<PagingData<Pokemon>> = liveData {
 
         // Ambil data dari Repository
-        emitSource( pokemonRepository.getPokemonList(offset = 0, limit = 10).cachedIn(viewModelScope).asLiveData())
+        emitSource( pokemonRepository.getPokemonList(offset = 0, limit = 30).cachedIn(viewModelScope).asLiveData())
     }
 }
