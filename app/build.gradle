@@ -7,11 +7,11 @@ plugins {
 }
 
 android {
-    namespace 'com.yusril.trawlbenstest'
+    namespace 'com.yusril.pokemon'
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.yusril.trawlbenstest"
+        applicationId "com.yusril.pokemon"
         minSdk 21
         targetSdk 34
         versionCode 1
