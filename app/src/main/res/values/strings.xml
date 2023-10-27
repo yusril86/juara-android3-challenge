@@ -13,4 +13,5 @@
     <string name="spatk">SpATK</string>
     <string name="spdef">SpDEF</string>
     <string name="type">Type :</string>
+    <string name="ability">Ability :</string>
 </resources>
