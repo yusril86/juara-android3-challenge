@@ -27,7 +27,8 @@ class DetailPokemonActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailPokemonBinding
     private val viewModel: DetailPokemonViewModel by viewModels()
     private  var adapterType : TypePokemonAdapter = TypePokemonAdapter()
-    private  var adapterAbility : AbilityAdapter = AbilityAdapter()
+
+    private lateinit var adapterAbility : AbilityAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,6 +55,10 @@ class DetailPokemonActivity : AppCompatActivity() {
                 is Resource.Success -> {
                     Log.d("pokemonNama", it.data?.name.toString())
                     Log.d("pokemonHeight", it.data?.height.toString())
+
+
+
+
                     binding.pbDetailPokemon.visibility = View.GONE
                     binding.tvNameDetailPokemon.text = it.data?.name
                     binding.tvHeightDetailPokemon.text = it.data?.height.toString()
@@ -82,10 +87,21 @@ class DetailPokemonActivity : AppCompatActivity() {
                                 isFirstResource: Boolean
                             ): Boolean {
                                 val drawable  = resource as BitmapDrawable
-                                val bitmap  = drawable.bitmap
-                                getDominantColor(drawable){ colorDominant ->
+                                 getDominantColor(drawable){ colorDominant ->
                                     binding.rootView.setBackgroundColor(colorDominant)
+                                     adapterAbility = AbilityAdapter(object : AbilityAdapter.AbilityInterface{
+                                         override fun colorDominant(): Int {
+                                             return colorDominant
+                                         }
+                                     })
+                                     binding.rvAbilityPokemon.apply {
+                                         adapter = adapterAbility
+                                         setHasFixedSize(true)
+                                     }
+                                     it.data?.abilities?.let { ability ->
+                                         adapterAbility.updateAdapterAbility(ability) }
                                 }
+
                                 return false
                             }
                         })
@@ -98,12 +114,7 @@ class DetailPokemonActivity : AppCompatActivity() {
                     }
                     adapterType.updateAdapter(it.data?.types!!)
 
-                    binding.rvAbilityPokemon.apply {
-                        adapter = adapterAbility
-                        setHasFixedSize(true)
-                    }
-                    it.data.abilities?.let { ability ->
-                        adapterAbility.updateAdapterAbility(ability) }
+
 
                     binding.apply {
                         hpProgress.setOnProgressChangeListener { value ->

@@ -6,12 +6,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.yusril.pokemon.data.model.Ability
 import com.yusril.pokemon.databinding.ItemAbiltyBinding
 
-class AbilityAdapter : RecyclerView.Adapter<AbilityAdapter.ItemViewHolder>() {
+class AbilityAdapter(private var abilityInterface: AbilityInterface) : RecyclerView.Adapter<AbilityAdapter.ItemViewHolder>() {
     private val mListAbility : MutableList<Ability> = ArrayList()
 
     fun updateAdapterAbility(abilityList : List<Ability>){
         mListAbility.clear()
         mListAbility.addAll(abilityList)
+    }
+
+    interface AbilityInterface{
+        fun colorDominant() : Int
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
@@ -22,6 +26,7 @@ class AbilityAdapter : RecyclerView.Adapter<AbilityAdapter.ItemViewHolder>() {
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         holder.binding.apply {
+            container.setBackgroundColor(abilityInterface.colorDominant())
             mListAbility[position].apply {
                 for (abilityList in mListAbility){
                     tvTypes.text = abilityList.ability?.name
