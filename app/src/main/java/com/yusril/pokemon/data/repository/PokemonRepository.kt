@@ -1,6 +1,8 @@
 package com.yusril.pokemon.data.repository
 
 import androidx.paging.PagingData
+import com.yusril.pokemon.data.database.entity.FavoritePokemonEntity
+import com.yusril.pokemon.data.database.entity.PokemonEntity
 import com.yusril.pokemon.data.model.Pokemon
 import com.yusril.pokemon.data.model.PokemonDetail
 import com.yusril.pokemon.utils.Resource
@@ -15,4 +17,11 @@ interface PokemonRepository {
 
     suspend fun getPokemonDetail(pokemonNumber: Int):Flow<Resource<PokemonDetail>>
 
+    fun getFavoritePokemon():List<FavoritePokemonEntity>
+
+    fun insertFavoritePokemon(pokemon:FavoritePokemonEntity)
+
+    fun deleteFavorite(favoritePokemonEntity: FavoritePokemonEntity)
+
+    fun isPokemonFavorite(pokemonName: String):FavoritePokemonEntity
 }

@@ -2,6 +2,7 @@ package com.yusril.pokemon.di
 
 import android.content.Context
 import com.yusril.pokemon.data.database.dao.PokemonDao
+import com.yusril.pokemon.data.database.dao.PokemonFavoriteDao
 import com.yusril.pokemon.data.database.dao.PokemonRemoteKeyDao
 import com.yusril.pokemon.data.database.room.PokemonDb
 import com.yusril.pokemon.data.datasource.LocalDataSource
@@ -47,5 +48,10 @@ object AppModule {
     @Provides
     fun providesRemoteKeyPokemon(pokemonDb: PokemonDb): PokemonRemoteKeyDao {
         return pokemonDb.pokemonRemoteKeyDao()
+    }
+
+    @Provides
+    fun providesFavoritePokemonDao(pokemonDb: PokemonDb): PokemonFavoriteDao {
+        return pokemonDb.pokemonFavoriteDao()
     }
 }

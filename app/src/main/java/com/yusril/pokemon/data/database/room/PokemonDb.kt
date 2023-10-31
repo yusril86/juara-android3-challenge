@@ -5,6 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.yusril.pokemon.data.database.dao.PokemonDao
+import com.yusril.pokemon.data.database.dao.PokemonFavoriteDao
 import com.yusril.pokemon.data.database.dao.PokemonRemoteKeyDao
 import com.yusril.pokemon.data.database.entity.PokemonEntity
 import com.yusril.pokemon.data.database.entity.PokemonRemoteKeyEntity
@@ -33,4 +34,5 @@ abstract class PokemonDb  : RoomDatabase(){
     }
     abstract fun pokemonDao(): PokemonDao
     abstract fun pokemonRemoteKeyDao(): PokemonRemoteKeyDao
+    abstract fun pokemonFavoriteDao () : PokemonFavoriteDao
 }

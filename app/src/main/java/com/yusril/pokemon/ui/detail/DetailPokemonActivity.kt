@@ -17,6 +17,7 @@ import com.bumptech.glide.request.target.Target
 import com.yusril.pokemon.R
 import com.yusril.pokemon.adapter.AbilityAdapter
 import com.yusril.pokemon.adapter.TypePokemonAdapter
+import com.yusril.pokemon.data.database.entity.FavoritePokemonEntity
 import com.yusril.pokemon.databinding.ActivityDetailPokemonBinding
 import com.yusril.pokemon.utils.Resource
 import com.yusril.pokemon.utils.getDominantColor
@@ -30,6 +31,9 @@ class DetailPokemonActivity : AppCompatActivity() {
 
     private lateinit var adapterAbility : AbilityAdapter
 
+    private var isFavorite = false
+    private var userName :String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailPokemonBinding.inflate(layoutInflater)
@@ -42,6 +46,7 @@ class DetailPokemonActivity : AppCompatActivity() {
         val image = intent.getStringExtra("IMAGE_POKEMON")
 
         getPokemonDetail(number, image.toString())
+        getStatusFavorite(userName.toString())
     }
 
     private fun getPokemonDetail(number: Int, image: String) {
@@ -63,6 +68,10 @@ class DetailPokemonActivity : AppCompatActivity() {
                     binding.tvNameDetailPokemon.text = it.data?.name
                     binding.tvHeightDetailPokemon.text = it.data?.height.toString()
                     binding.tvWeightDetailPokemon.text = it.data?.weight.toString()
+
+                    userName = it.data?.name
+                    val favoritePokemonEntity = FavoritePokemonEntity(it.data?.id,
+                        it.data?.name.toString(),image)
 
 
                     Glide.with(this)
@@ -114,6 +123,10 @@ class DetailPokemonActivity : AppCompatActivity() {
                     }
                     adapterType.updateAdapter(it.data?.types!!)
 
+                    binding.btnFavorite.setOnClickListener {
+                        insertFavorite(favoritePokemonEntity)
+                        Toast.makeText(this, "Favorite", Toast.LENGTH_SHORT).show()
+                    }
 
 
                     binding.apply {
@@ -159,4 +172,34 @@ class DetailPokemonActivity : AppCompatActivity() {
     }
 
 
+    private fun getStatusFavorite(name: String){
+        viewModel.isFavorite(name).let {
+            if (it.id !== null) {
+                setFavorite(true)
+            }else{
+                setFavorite(false)
+            }
+        }
+        viewModel.isFavoriteLiveData().observe(this){
+            if (it !== null) {
+                setFavorite(true)
+            }else{
+                setFavorite(false)
+            }
+        }
+    }
+
+    private fun insertFavorite(pokemonEntity: FavoritePokemonEntity){
+        viewModel.addFavoritePokemon(pokemonEntity)
+    }
+
+    private fun setFavorite(favorite : Boolean){
+        if(favorite){
+            isFavorite = true
+            binding.btnFavorite.setImageResource(R.drawable.ic_favorite)
+        }else{
+            isFavorite = false
+            binding.btnFavorite.setImageResource(R.drawable.ic_unfavorite)
+        }
+    }
 }

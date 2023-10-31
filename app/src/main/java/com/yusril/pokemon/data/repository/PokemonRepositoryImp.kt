@@ -1,6 +1,8 @@
 package com.yusril.pokemon.data.repository
 
 import androidx.paging.*
+import com.yusril.pokemon.data.database.entity.FavoritePokemonEntity
+import com.yusril.pokemon.data.database.entity.PokemonEntity
 import com.yusril.pokemon.data.datasource.LocalDataSource
 import com.yusril.pokemon.data.datasource.RemoteDataSource
 import com.yusril.pokemon.data.mapper.toPokemon
@@ -37,6 +39,22 @@ class PokemonRepositoryImp @Inject constructor(
         }catch (exception:Exception){
             emit(Resource.Error(exception.toString()))
         }
+    }
+
+    override fun getFavoritePokemon(): List<FavoritePokemonEntity> {
+        return localDataSource.getFavoritePokemon()
+    }
+
+    override fun insertFavoritePokemon(pokemon: FavoritePokemonEntity) {
+        localDataSource.insertFavoritePokemon(pokemon)
+    }
+
+    override fun deleteFavorite(favoritePokemonEntity: FavoritePokemonEntity) {
+        localDataSource.deleteFavoritePokemon(favoritePokemonEntity)
+    }
+
+    override fun isPokemonFavorite(pokemonName: String): FavoritePokemonEntity {
+        return localDataSource.isPokemonFavorite(pokemonName)
     }
 
 

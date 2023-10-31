@@ -52,7 +52,7 @@ class HomeFragment : Fragment() {
             }
         )
 
-        viewModel.surahFetchData.observe(this){
+        viewModel.pokemonFetchData.observe(this){
             adapter.submitData(lifecycle,it)
         }
 

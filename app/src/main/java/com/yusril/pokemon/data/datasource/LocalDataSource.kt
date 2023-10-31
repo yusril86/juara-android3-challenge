@@ -2,7 +2,9 @@ package com.yusril.pokemon.data.datasource
 
 import androidx.paging.PagingSource
 import com.yusril.pokemon.data.database.dao.PokemonDao
+import com.yusril.pokemon.data.database.dao.PokemonFavoriteDao
 import com.yusril.pokemon.data.database.dao.PokemonRemoteKeyDao
+import com.yusril.pokemon.data.database.entity.FavoritePokemonEntity
 import com.yusril.pokemon.data.database.entity.PokemonEntity
 import com.yusril.pokemon.data.database.entity.PokemonRemoteKeyEntity
 import javax.inject.Inject
@@ -11,7 +13,8 @@ import javax.inject.Singleton
 @Singleton
 class LocalDataSource @Inject constructor(
     private val remoteKeyDao: PokemonRemoteKeyDao,
-   private val pokemonDao: PokemonDao
+   private val pokemonDao: PokemonDao,
+    private val favoriteDao: PokemonFavoriteDao
 ) {
     fun getPokemonDataLocal():PagingSource<Int, PokemonEntity>{
         return pokemonDao.getAllPokemon()
@@ -25,6 +28,21 @@ class LocalDataSource @Inject constructor(
         pokemonDao.deleteAll()
     }
 
+    fun insertFavoritePokemon(favoritePokemonEntity: FavoritePokemonEntity):Long{
+        return favoriteDao.insertFavoritePokemon(favoritePokemonEntity)
+    }
+
+    fun getFavoritePokemon():List<FavoritePokemonEntity>{
+        return favoriteDao.getFavoritePokemon()
+    }
+
+    fun deleteFavoritePokemon(pokemon: FavoritePokemonEntity){
+        favoriteDao.deleteFavoritePokemon(pokemon)
+    }
+
+    fun isPokemonFavorite(pokemonName: String): FavoritePokemonEntity {
+        return favoriteDao.getFavoritePokemonById(pokemonName)
+    }
 
     suspend fun getPokemonKeysLocal():List<PokemonRemoteKeyEntity>{
        return remoteKeyDao.getPokemonKeys()
