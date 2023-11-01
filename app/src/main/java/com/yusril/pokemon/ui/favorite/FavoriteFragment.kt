@@ -4,9 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
+import com.yusril.pokemon.adapter.FavoriteAdapter
 import com.yusril.pokemon.databinding.FragmentFavoriteBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -14,6 +14,8 @@ import dagger.hilt.android.AndroidEntryPoint
 class FavoriteFragment : Fragment() {
 
     private var _binding: FragmentFavoriteBinding? = null
+    private val viewModel : FavoriteViewModel by viewModels()
+    private val adapterFavorite : FavoriteAdapter = FavoriteAdapter()
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -24,17 +26,22 @@ class FavoriteFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val favoriteViewModel =
-            ViewModelProvider(this).get(FavoriteViewModel::class.java)
 
         _binding = FragmentFavoriteBinding.inflate(inflater, container, false)
-        val root: View = binding.root
 
-        val textView: TextView = binding.textDashboard
-        favoriteViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.favoritePokemonList
+        viewModel.favoriteLiveData().observe(this) {
+            binding.rvLIstPokemon.apply {
+                adapter = adapterFavorite
+                setHasFixedSize(true)
+                adapterFavorite.updateData(it)
+            }
         }
-        return root
     }
 
     override fun onDestroyView() {

@@ -41,19 +41,19 @@ class PokemonRepositoryImp @Inject constructor(
         }
     }
 
-    override fun getFavoritePokemon(): List<FavoritePokemonEntity> {
+    override suspend fun getFavoritePokemon(): List<FavoritePokemonEntity> {
         return localDataSource.getFavoritePokemon()
     }
 
-    override fun insertFavoritePokemon(pokemon: FavoritePokemonEntity) {
+    override suspend fun insertFavoritePokemon(pokemon: FavoritePokemonEntity) {
         localDataSource.insertFavoritePokemon(pokemon)
     }
 
-    override fun deleteFavorite(favoritePokemonEntity: FavoritePokemonEntity) {
+    override suspend fun deleteFavorite(favoritePokemonEntity: FavoritePokemonEntity) {
         localDataSource.deleteFavoritePokemon(favoritePokemonEntity)
     }
 
-    override fun isPokemonFavorite(pokemonName: String): FavoritePokemonEntity {
+    override suspend fun isPokemonFavorite(pokemonName: String): FavoritePokemonEntity {
         return localDataSource.isPokemonFavorite(pokemonName)
     }
 

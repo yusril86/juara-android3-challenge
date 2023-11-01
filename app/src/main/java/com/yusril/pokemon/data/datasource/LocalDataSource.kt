@@ -28,19 +28,19 @@ class LocalDataSource @Inject constructor(
         pokemonDao.deleteAll()
     }
 
-    fun insertFavoritePokemon(favoritePokemonEntity: FavoritePokemonEntity):Long{
+    suspend fun insertFavoritePokemon(favoritePokemonEntity: FavoritePokemonEntity):Long{
         return favoriteDao.insertFavoritePokemon(favoritePokemonEntity)
     }
 
-    fun getFavoritePokemon():List<FavoritePokemonEntity>{
+    suspend fun getFavoritePokemon():List<FavoritePokemonEntity>{
         return favoriteDao.getFavoritePokemon()
     }
 
-    fun deleteFavoritePokemon(pokemon: FavoritePokemonEntity){
+    suspend fun deleteFavoritePokemon(pokemon: FavoritePokemonEntity){
         favoriteDao.deleteFavoritePokemon(pokemon)
     }
 
-    fun isPokemonFavorite(pokemonName: String): FavoritePokemonEntity {
+    suspend fun isPokemonFavorite(pokemonName: String): FavoritePokemonEntity {
         return favoriteDao.getFavoritePokemonById(pokemonName)
     }
 

@@ -8,7 +8,9 @@ import com.yusril.pokemon.data.repository.PokemonRepository
 import com.yusril.pokemon.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -17,28 +19,37 @@ class DetailPokemonViewModel @Inject constructor(
 ) : ViewModel() {
 //    private val mPokemonDetail =  MutableLiveData<PokemonDetail?>()
 
-    private val mFavorite = MutableLiveData<FavoritePokemonEntity>()
+//    private val mFavorite = MutableLiveData<FavoritePokemonEntity>()
 
     fun pokemonFetchData(number:Int) : LiveData<Resource<PokemonDetail>> = liveData{
         emit(Resource.Loading())
         emitSource(pokemonRepository.getPokemonDetail(number).asLiveData())
     }
 
-    val favoritePokemonList = pokemonRepository.getFavoritePokemon()
+    val favoritePokemonList = viewModelScope.launch {
+        pokemonRepository.getFavoritePokemon()
+    }
 
     // Fungsi untuk menambahkan Pokemon ke daftar favorit
     fun addFavoritePokemon(favoritePokemon: FavoritePokemonEntity) {
-//        val favoritePokemon = FavoritePokemon(id, name, imageUrl)
         viewModelScope.launch(Dispatchers.IO) {
             pokemonRepository.insertFavoritePokemon(favoritePokemon)
         }
     }
 
-    fun isFavorite(pokemonName : String):FavoritePokemonEntity{
-        return pokemonRepository.isPokemonFavorite(pokemonName)
+    fun deleteFavorite(favoritePokemon: FavoritePokemonEntity){
+        viewModelScope.launch {
+            pokemonRepository.deleteFavorite(favoritePokemon)
+        }
     }
 
-    fun isFavoriteLiveData() : LiveData<FavoritePokemonEntity>{
-        return mFavorite
+    suspend fun isFavorite(pokemonName: String): FavoritePokemonEntity? {
+        return withContext(Dispatchers.Default) {
+            pokemonRepository.isPokemonFavorite(pokemonName)
+        }
     }
+
+//    fun isFavoriteLiveData() : LiveData<FavoritePokemonEntity>{
+//        return mFavorite
+//    }
 }

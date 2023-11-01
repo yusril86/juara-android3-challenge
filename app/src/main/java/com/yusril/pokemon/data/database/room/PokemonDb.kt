@@ -7,10 +7,11 @@ import androidx.room.RoomDatabase
 import com.yusril.pokemon.data.database.dao.PokemonDao
 import com.yusril.pokemon.data.database.dao.PokemonFavoriteDao
 import com.yusril.pokemon.data.database.dao.PokemonRemoteKeyDao
+import com.yusril.pokemon.data.database.entity.FavoritePokemonEntity
 import com.yusril.pokemon.data.database.entity.PokemonEntity
 import com.yusril.pokemon.data.database.entity.PokemonRemoteKeyEntity
 
-@Database(entities = [PokemonEntity::class, PokemonRemoteKeyEntity::class], version = 1)
+@Database(entities = [PokemonEntity::class, PokemonRemoteKeyEntity::class, FavoritePokemonEntity::class], version = 1)
 abstract class PokemonDb  : RoomDatabase(){
     companion object {
         private const val  DB_NAME = "pokemon-db"

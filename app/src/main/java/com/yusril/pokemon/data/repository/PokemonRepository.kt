@@ -17,11 +17,11 @@ interface PokemonRepository {
 
     suspend fun getPokemonDetail(pokemonNumber: Int):Flow<Resource<PokemonDetail>>
 
-    fun getFavoritePokemon():List<FavoritePokemonEntity>
+   suspend fun getFavoritePokemon():List<FavoritePokemonEntity>
 
-    fun insertFavoritePokemon(pokemon:FavoritePokemonEntity)
+   suspend fun insertFavoritePokemon(pokemon:FavoritePokemonEntity)
 
-    fun deleteFavorite(favoritePokemonEntity: FavoritePokemonEntity)
+   suspend fun deleteFavorite(favoritePokemonEntity: FavoritePokemonEntity)
 
-    fun isPokemonFavorite(pokemonName: String):FavoritePokemonEntity
+   suspend fun isPokemonFavorite(pokemonName: String):FavoritePokemonEntity?
 }

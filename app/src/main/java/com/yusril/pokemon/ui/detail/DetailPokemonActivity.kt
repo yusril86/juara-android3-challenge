@@ -8,6 +8,8 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewModelScope
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
@@ -22,6 +24,8 @@ import com.yusril.pokemon.databinding.ActivityDetailPokemonBinding
 import com.yusril.pokemon.utils.Resource
 import com.yusril.pokemon.utils.getDominantColor
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class DetailPokemonActivity : AppCompatActivity() {
@@ -32,7 +36,6 @@ class DetailPokemonActivity : AppCompatActivity() {
     private lateinit var adapterAbility : AbilityAdapter
 
     private var isFavorite = false
-    private var userName :String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,7 +49,7 @@ class DetailPokemonActivity : AppCompatActivity() {
         val image = intent.getStringExtra("IMAGE_POKEMON")
 
         getPokemonDetail(number, image.toString())
-        getStatusFavorite(userName.toString())
+
     }
 
     private fun getPokemonDetail(number: Int, image: String) {
@@ -69,7 +72,7 @@ class DetailPokemonActivity : AppCompatActivity() {
                     binding.tvHeightDetailPokemon.text = it.data?.height.toString()
                     binding.tvWeightDetailPokemon.text = it.data?.weight.toString()
 
-                    userName = it.data?.name
+                    getStatusFavorite(it.data?.name.toString())
                     val favoritePokemonEntity = FavoritePokemonEntity(it.data?.id,
                         it.data?.name.toString(),image)
 
@@ -124,8 +127,13 @@ class DetailPokemonActivity : AppCompatActivity() {
                     adapterType.updateAdapter(it.data?.types!!)
 
                     binding.btnFavorite.setOnClickListener {
-                        insertFavorite(favoritePokemonEntity)
-                        Toast.makeText(this, "Favorite", Toast.LENGTH_SHORT).show()
+                        if (isFavorite){
+                            deleteFavorite(favoritePokemonEntity)
+                            Toast.makeText(this, "Remove Favorite", Toast.LENGTH_SHORT).show()
+                        }else{
+                            insertFavorite(favoritePokemonEntity)
+                            Toast.makeText(this, "Add Favorite", Toast.LENGTH_SHORT).show()
+                        }
                     }
 
 
@@ -173,24 +181,26 @@ class DetailPokemonActivity : AppCompatActivity() {
 
 
     private fun getStatusFavorite(name: String){
-        viewModel.isFavorite(name).let {
-            if (it.id !== null) {
-                setFavorite(true)
-            }else{
-                setFavorite(false)
+        viewModel.viewModelScope.launch {
+            viewModel.isFavorite(name).let { pokemon ->
+                if (pokemon !== null) {
+                    setFavorite(true)
+                }else{
+                    setFavorite(false)
+                }
             }
         }
-        viewModel.isFavoriteLiveData().observe(this){
-            if (it !== null) {
-                setFavorite(true)
-            }else{
-                setFavorite(false)
-            }
-        }
+
     }
 
     private fun insertFavorite(pokemonEntity: FavoritePokemonEntity){
         viewModel.addFavoritePokemon(pokemonEntity)
+        setFavorite(true)
+    }
+
+    private fun deleteFavorite(favoritePokemonEntity: FavoritePokemonEntity){
+        viewModel.deleteFavorite(favoritePokemonEntity)
+        setFavorite(false)
     }
 
     private fun setFavorite(favorite : Boolean){
