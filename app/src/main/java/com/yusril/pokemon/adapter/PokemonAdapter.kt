@@ -43,15 +43,6 @@ class PokemonAdapter : PagingDataAdapter<Pokemon, PokemonAdapter.ItemView>(DIFF_
                 binding.tvNamePokemon.text = data.name
                 binding.tvNumberPokemon.text = data.number.toString()
 
-                /*getDominantColor(binding.ivPokemon.drawable){ colorDominant->
-
-                    Glide.with(itemView.context)
-                        .load("${uriImagePokemon}/${data.number}.png")
-                        .centerCrop()
-                        .placeholder(R.drawable.ic_launcher_background)
-                        .into(binding.ivPokemon)
-                    binding.card.setBackgroundColor(colorDominant)
-                }*/
 
                 Glide.with(itemView.context)
                     .load("${uriImagePokemon}/${data.number}.png")

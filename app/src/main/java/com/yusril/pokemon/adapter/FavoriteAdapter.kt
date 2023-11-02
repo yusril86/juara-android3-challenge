@@ -1,5 +1,6 @@
 package com.yusril.pokemon.adapter
 
+import android.content.Intent
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
@@ -13,6 +14,7 @@ import com.bumptech.glide.request.target.Target
 import com.yusril.pokemon.R
 import com.yusril.pokemon.data.database.entity.FavoritePokemonEntity
 import com.yusril.pokemon.databinding.ItemListPokemonBinding
+import com.yusril.pokemon.ui.detail.DetailPokemonActivity
 import com.yusril.pokemon.utils.Constant
 import com.yusril.pokemon.utils.getDominantColor
 
@@ -21,6 +23,7 @@ class FavoriteAdapter : RecyclerView.Adapter<FavoriteAdapter.ItemView>() {
 
 
     fun updateData(listFavorite : List<FavoritePokemonEntity>){
+        mListFavoritePokemon.clear()
         mListFavoritePokemon.addAll(listFavorite)
         notifyDataSetChanged()
     }
@@ -83,6 +86,14 @@ class FavoriteAdapter : RecyclerView.Adapter<FavoriteAdapter.ItemView>() {
                         }
                     })
                     .into(binding.ivPokemon)
+
+                itemView.setOnClickListener {
+                    val intent = Intent(itemView.context, DetailPokemonActivity::class.java)
+                    intent.putExtra("NUMBER_POKEMON",data.id)
+                    intent.putExtra("IMAGE_POKEMON","${Constant.uriImagePokemon}/${data.id}.png")
+                    itemView.context.startActivity(intent)
+
+                }
             }
     }
 

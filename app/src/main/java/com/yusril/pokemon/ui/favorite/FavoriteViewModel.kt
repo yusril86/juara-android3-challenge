@@ -5,8 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yusril.pokemon.data.database.entity.FavoritePokemonEntity
+import com.yusril.pokemon.data.model.PokemonDetail
 import com.yusril.pokemon.data.repository.PokemonRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -15,15 +17,19 @@ class FavoriteViewModel @Inject  constructor(
     private val pokemonRepository: PokemonRepository
 ) : ViewModel() {
 
-    private val mFavoriteLiveData = MutableLiveData<List<FavoritePokemonEntity>>()
+     val mFavoriteLiveData = MutableLiveData<List<FavoritePokemonEntity>>()
 
-    val favoritePokemonList = viewModelScope.launch {
-        mFavoriteLiveData.postValue(pokemonRepository.getFavoritePokemon())
+
+    fun refreshData() {
+
+        viewModelScope.launch {
+            mFavoriteLiveData.value = pokemonRepository.getFavoritePokemon()
+        }
     }
 
-    fun favoriteLiveData() : LiveData<List<FavoritePokemonEntity>>{
+    /*fun favoriteLiveData() : LiveData<List<FavoritePokemonEntity>>{
         return  mFavoriteLiveData
-    }
+    }*/
 
 
 }

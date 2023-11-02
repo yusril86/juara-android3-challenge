@@ -19,18 +19,15 @@ class DetailPokemonViewModel @Inject constructor(
 ) : ViewModel() {
 //    private val mPokemonDetail =  MutableLiveData<PokemonDetail?>()
 
-//    private val mFavorite = MutableLiveData<FavoritePokemonEntity>()
+    private val mFavorite = MutableLiveData<FavoritePokemonEntity>()
 
     fun pokemonFetchData(number:Int) : LiveData<Resource<PokemonDetail>> = liveData{
         emit(Resource.Loading())
         emitSource(pokemonRepository.getPokemonDetail(number).asLiveData())
     }
 
-    val favoritePokemonList = viewModelScope.launch {
-        pokemonRepository.getFavoritePokemon()
-    }
 
-    // Fungsi untuk menambahkan Pokemon ke daftar favorit
+
     fun addFavoritePokemon(favoritePokemon: FavoritePokemonEntity) {
         viewModelScope.launch(Dispatchers.IO) {
             pokemonRepository.insertFavoritePokemon(favoritePokemon)
